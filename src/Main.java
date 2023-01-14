@@ -3,22 +3,22 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        PTUI game = new PTUI(5, 2, 1);
-        game.CreateBoard();
-        game.displayBoard(game.getBoard());
+        Board game = new Board(5, 2, 1);
+        game.displayBoard();
         Scanner input = new Scanner(System.in);
-        char[][] completedBoard = new char[5][5];
+        char[][] completedBoardChar = new char[5][5];
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 5; col++) {
                 if (row - col < 0){
-                    completedBoard[row][col] = ' ';
+                    completedBoardChar[row][col] = ' ';
                 }
                 else {
-                    completedBoard[row][col] = '.';
+                    completedBoardChar[row][col] = '.';
                 }
             }
         }
-        game.displayBoard(completedBoard);
+        Board completedBoard = new Board(completedBoardChar);
+        completedBoard.displayBoard();
         /**
         System.out.println("input the start and end coordinates you want to move, separated with spaces");
         String strLocation = input.nextLine();
@@ -36,9 +36,9 @@ public class Main {
         game.displayBoard();
          **/
 
-        HashMap<char[][], char[][]> visited = game.search(game.getBoard());
-        System.out.println(visited.containsKey(completedBoard));
-        Iterator hmIterator = visited.keySet().iterator();
-        game.displayBoard((char[][]) hmIterator.next());
+
+        Search search = new Search(game);
+        HashMap<Board, Board> values = search.DFS();
+        System.out.println(values.size());
     }
 }
